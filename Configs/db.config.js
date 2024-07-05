@@ -1,6 +1,6 @@
 const { default: mongoose } = require("mongoose");
 
-const dbUrl = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/omitrek';
+const dbUrl = process.env.MONGO_URI || 'mongodb+srv://trekomi:AkqEPipnajKeTrTC@cluster0.uy9ofus.mongodb.net/omitrek-new-trial';
 const dbConnect = async () => {
     try {
         await mongoose.connect(dbUrl, {
