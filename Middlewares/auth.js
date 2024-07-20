@@ -10,9 +10,9 @@ const authorize = async (req, res, next) => {
     try {
         const endpoint = req.url?.toString();
 
-        const token = req.cookies.jwti || req.headers['authorization'];
+        const token = req.cookies.jwt || req.headers['authorization'];
 
-        console.log('toka toka', token, req.headers, req.Authorization)
+        // console.log('toka toka', token)
         if (!token) {
             if (usnauthorisedAccess.some(elem=> elem == endpoint)) {
                 return next()
@@ -26,7 +26,7 @@ const authorize = async (req, res, next) => {
         let data = await verifyToken(token);
         req.data = data;
 
-        console.log(data)
+        // console.log(data)
 
         if (data.role == 'User' && req.baseUrl != '/api/v1') {
             console.log('v1')

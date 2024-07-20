@@ -14,20 +14,29 @@ const router = Router()
 router.post('/upload', upload.array('files', 10), async (req, res) => {
     try {
         const files = req.files;
+        
         if (!files || files.length === 0) {
             return res.status(404).json(new ApiError(404, "nothing is here to upload."));
         }
 
         const uploadPromises = files.map(file => 
-            cloudinary.uploader.upload(file.path)
+            new Promise((resolve, reject) => {
+                const uploadStream = cloudinary.uploader.upload_stream((error, result) => {
+                    if (error) {
+                        return reject(error);
+                    }
+                    resolve(result);
+                });
+                uploadStream.end(file.buffer);
+            })
         );
-
         const uploadResults = await Promise.all(uploadPromises);
 
         const urls = uploadResults.map(result => result.secure_url);
 
-        res.status(200).json(new ApiResponse(200, "Uploaded successfully !", urls));
+        res.status(200).json(new ApiResponse(200, "Uploaded successfully !", {urls, name:req.body?.name}));
     } catch (error) {
+        console.error(error)
         res.status(500).json(new ApiError(500, "An error occurred during the upload process."));
     }
 });

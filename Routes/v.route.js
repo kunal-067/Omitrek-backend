@@ -39,5 +39,7 @@ router.get("/search-shop", shopController.searchShop);
 router.get("/shop-info",shopController.getShopInfo);
 
 
+router.get('/get-categories',  productController.getCategories)
+
 module.exports = router;
 

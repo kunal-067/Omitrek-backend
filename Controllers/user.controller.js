@@ -139,7 +139,6 @@ const getUserInfo = asyncHandler(async (req, res) => {
     } = req.data;
 
     const user = await User.findById(userId);
-    console.log(user)
 
     if (!user) {
         return res.status(404).send(new ApiError(404, 'User not found ! invalid user'));

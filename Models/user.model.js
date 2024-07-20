@@ -17,6 +17,30 @@ const cartItemSchema = new mongoose.Schema({
     }
 });
 
+
+const addressSchema = new mongoose.Schema({
+    name: {type:String, required:true},
+    phone:{
+        type: Number,
+        required: true
+    },
+
+    landMark:String,
+    houseNo:String,
+    street:String,
+    city:String,
+    state:String,
+    pinCode:{type:Number,required:true},
+    country: String,
+    address:String,
+
+    coordinate:[Number],
+    isDefault:{
+        type:Boolean,
+        default:false
+    }
+})
+
 const userSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -27,15 +51,8 @@ const userSchema = new mongoose.Schema({
         required: true
     },
     email: String,
-    address: {
-        street: String,
-        address: String,
-        city: String,
-        state: String,
-        country: String,
-        pincode: Number
-    },
-    genAddress:String,
+    addresses: [addressSchema],
+
     role: {
         type: String,
         enum: ['User', 'Seller', 'Admin', 'Affliate'],

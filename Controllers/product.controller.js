@@ -72,7 +72,8 @@ const getPipeLine = ({
             image: {
                 $arrayElemAt: ["$images", 0]
             },
-            price: 1,
+            mrp: 1,
+            sp:1,
             discount: 1,
             rate: 1,
             distance: 1,
@@ -184,8 +185,12 @@ const addProduct = asyncHandler(async (req, res) => {
         coordinates,
         images,
         quantity,
-        mrp,sp,discount
+        mrp,
+        sp,
+        discount
     } = req.body;
+
+    console.log(variants, req.body)
 
 
     const shop = await Shop.findById(shopId);
@@ -196,15 +201,18 @@ const addProduct = asyncHandler(async (req, res) => {
     }
 
     let product = new Product({
-        shop:shopId,
+        shop: shopId,
         name,
         category,
         description,
         variants,
         images,
-        mrp,sp,discount,quantity,
-        uploadedFrom:{
-            coordinates : coordinates || shop.location?.coordinates
+        mrp,
+        sp,
+        discount,
+        quantity,
+        uploadedFrom: {
+            coordinates: coordinates || shop.location?.coordinates
         }
     });
 
@@ -272,6 +280,13 @@ const approveProduct = asyncHandler(async (req, res) => {
 
 })
 
+
+
+const getCategories = asyncHandler(async (req, res) => {
+    const categories = await Category.find({});
+    return res.send(new ApiResponse(200, 'Categories fetched successfully !', categories));
+})
+
 const productController = {
     getByCategory,
     getRandomProducts,
@@ -279,7 +294,8 @@ const productController = {
     getProductInfo,
     addProduct,
     editProduct,
-    approveProduct
+    approveProduct,
+    getCategories
 }
 
 module.exports = productController;

@@ -201,9 +201,7 @@ const getShopInfo = asyncHandler(async (req, res) => {
         )
     }
 
-    return res.send(new ApiResponse(200, 'Successfully fetched shop info.', {
-        shop
-    }));
+    return res.send(new ApiResponse(200, 'Successfully fetched shop info.', shop));
 });
 
 
@@ -225,9 +223,7 @@ const getShopInfoBySeller = asyncHandler(async (req, res) => {
         )
     }
 
-    return res.send(new ApiResponse(200, 'Successfully fetched shop info.', {
-        shop
-    }));
+    return res.send(new ApiResponse(200, 'Successfully fetched shop info.', shop));
 });
 
 

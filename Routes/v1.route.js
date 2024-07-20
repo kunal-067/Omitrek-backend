@@ -5,6 +5,7 @@ const orderController = require("../Controllers/order.controller");
 const cartController = require("../Controllers/cart.controller");
 const walletController = require("../Controllers/wallet.controller");
 const { checkUniqueName, registerShop } = require("../Controllers/shop.controller");
+const addressController = require("../Controllers/address.controller");
 
 const router = Router();
 
@@ -38,11 +39,19 @@ router.get('/order-info', orderController.getOrderInfo);
 router.patch('/order', orderController.changeOrderStatus);
 
 //wallet routes ---
+router.get('/user-trans', walletController.getUserTransactions);
 router.post('/withdrawl', walletController.withdrawlRequest);
 router.post('/topup', walletController.topUp);
 router.post('/transaction-password', walletController.setTransactionPassword);
 router.get('/withdrawls', walletController.getWithdrawls);
 router.post('/send-money', walletController.sendMoney);
+
+//address routes ----
+router.get('/addresses', addressController.getAddresses);
+router.post('/addresses', addressController.addAddress);
+router.put('/addresses', addressController.updateAddress);
+router.delete('/addresses', addressController.deleteAddress)
+
 
 
 module.exports = router;
